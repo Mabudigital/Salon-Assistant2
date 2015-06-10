@@ -180,9 +180,8 @@ pic.insertRecord = function(cid,purl){
  pic.onSuccess = function (tx, r){
 	var id = $("#piccustomerid").val();
 	$('#customerlist').html("");
-	$('li.piclist').remove();
+	getAllTheData();
 	getCustomerData(id);
-	getCustomerPictureData(id);
 	window.location.replace('#customersdetails');
 }
 //function will be called when process succeed
@@ -266,6 +265,4 @@ function getCustomerPictureData(id) {
 		}
 	}
 	pic.selectCustRecords(id,renderPic);
-	//$('#customerlist').html("");
-	//getAllTheData();
 }
