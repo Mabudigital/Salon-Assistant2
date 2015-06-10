@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//ES" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+ <head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, usr-scalable=no, minimal-ui">
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<link href="js/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen">
+
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script src="js/db.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition="slide";
+  $.mobile.allowCrossDomainPages = true;
+});
+</script>
+<script src="js/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+<script type="text/javascript">
+$("a.pic").fancybox({
+	openEffect	: 'elastic',
+    closeEffect	: 'elastic',
+    helpers : {
+		title: {
+			type: 'inside'
+        }
+    }
+});
+</script>
+<title>Salon Assistant</title>
+<style type="text/css">
+body{color:#662d91;}
+.content{margin:auto;}
+#topbar{width:100%;height:48px;border-bottom:solid 1px #662d91;color:#662d91;font-size:18px;line-height:3;}
+#topbar .logo{height:24px;width:auto;margin: auto;display: block;padding-top: 10px;}
+#topbar div{display:inline-block;vertical-align:middle;}
+#topbar #icon{position:absolute;right:0;}
+#topbar .icon{cursor:pointer;}
+#topbar .icon img{height:42px;}
+.back{max-width:70%;white-space: nowrap; overflow: hidden;text-overflow: ellipsis;text-decoration:none;color:#662d91!important;font-weight:normal!important;display: inline-block;vertical-align: middle;}
+.back img{height:32px;  display: inline-block; vertical-align: middle;margin-top: -5px;}
+form{width:100%;text-align:left;color:#999;}
+label{color:#999;}
+input[type='text'],input[type='tel'],input[type='email'],input[type='date'],input[type='time'],select{width:98%;margin:auto;border-top:none;border-left:none;border-right:none;border-bottom:solid 1px #999;background:none;display:block;border-radius:0;}
+#customerlist{color:#666;list-style-type:none;padding:0;}
+#customerlist img{height:50px;width:50px;border-radius:50%;position:relative;vertical-align:top;display:inline-block;}
+#customerlist li{height:55px;width:107%;overflow:hidden;}
+#customerlist .custlistinfo{position:relative;vertical-align:top;color:#333;font-weight:bold;border-bottom:solid 1px #dadada;display:inline-block;width:87%;height:50px;left:60px;top:-50px;}
+#customerlist .custlistlastvisit{font-weight:normal;}
+#customerimages ul{width:90%;display:inline-block;white-space:nowrap;overflow:auto;}
+#customerimages ul li{width:125px;height:125px;overflow:hidden;border-style: solid; border-width: 1px;  border-radius: 5px; border-color:#662d91;display:inline-block;margin:10px 10px 25px;position:relative;vertical-align: top;}
+.picbutton{width:125px;line-height: 30px; font-size: 15px; color:#662d91; cursor:pointer;display:block; background: #fff;}
+.shotbtn{idth:125px;height:125px;border:none;}
+#share img{width:24px;position:absolute;z-index:1;top:100px;left:95px;}
+#picdelete img{width:24px;position:absolute;z-index:1;top:100px;left:5px;}
+.call_btn img{width:24px;position:relative;top:-35px;left:92%;}
+#customeredit [disabled]{color:#555;-webkit-text-fill-color:rgba(85,85,85,1)}
+
+</style>
+</head>
+<body>
+<!--Home page-->
+<div data-role="page" id="home">
+	<div id="topbar"><img class="logo" src="images/textlogo.png"/></div>
+	<div class="content" data-role="content" >
+		<button class="button" onclick="window.location.href='#addcustomer'" data-role="none">Add Customer</button>
+		<button class="button" onclick="window.location.href='#customerprofile'" data-role="none">Customer Profile</button>
+		<button class="button" onclick="window.location.href='#appointments'" data-role="none">Appointments</button>
+		<button class="button" data-role="none">Configuration</button>
+		
+	</div>
+</div>
+<!-- /Home page-->
+<!--Add customer page-->
+<div data-role="page" id="addcustomer">
+	<div id="topbar">
+		<a class="back" href="#home" data-direction="reverse"><img src="images/back.png"/>Add Customer</a>
+	</div>
+	<div class="content" data-role="content" >
+		<form id="user-info">
+			<label >Customer Name: <input id="name" data-role="none" class="requiered" type="text" name="name"/></label>
+			<label>Phone number: <input  id="phone" data-role="none" type="tel" name="phone"/></label>
+			<label>Email: <input id="email" data-role="none" type="email" name="email"/></label>
+			<label>Birthday: <input id="birthday" data-role="none" class="requiered" type="date" name="bithday"/></label>
+			<label>Sex: <select id="sex" data-role="none" class="requiered" name="sex">
+							<option value="Female">Female</option>
+							<option value="Male">Male</option>
+						</select>
+			</label>
+			<label>Alergies: <input id="alergies" data-role="none" type="text" name="alergies"/></label>
+			<label>Last visit: <input id="lastvisit" data-role="none" class="requiered" type="date" name="lastvisit"/></label>
+			<label>Treatments: <input id="treatments" data-role="none" type="text" name="treatments"/></label>
+			<label>Cut: <input id="cut" data-role="none" type="text" name="cut"/></label>
+			<label>Color: <input id="color" data-role="none" type="text" name="color"/></label>
+			<label>Hair type: <input id="hairtype" data-role="none" type="text" name="hairtype"/></label>
+			<label>Scalp type: <input id="scalptype" data-role="none" type="text" name="scalptype"/></label>
+			<label>Products: <input id="products" data-role="none" type="text" name="products"/></label>
+			<input data-role="none" type="submit" id="submitnewcustomer" class="button" value="Save"/>
+		</form>
+		<!--<button data-role="none" class="button" onclick="app.takePicture();">Take Picture</button>-->
+	</div>
+</div>
+<!-- /Add customer page-->
+<!--Customer profile page-->
+<div data-role="page" id="customerprofile">
+	<div id="topbar">
+		<a class="back" href="#home" data-direction="reverse"><img src="images/back.png"/>Customer Profile</a>
+	</div>
+	<div class="content" data-role="content">
+		<ul id="customerlist"></ul>
+	</div>
+</div>
+<!-- /Customer profile page-->
+<!--Customer details page-->
+<div data-role="page" id="customerdetails">
+	<div id="topbar">
+		<a class="back" id="custdetl" href="#customerprofile" data-direction="reverse"><img src="images/back.png"/><span id="name"></span></a><div id="icon"><div id ="edit" class="icon"><img src="images/edit.png"/></div><div id="delete" class="icon" onclick="" ><img src="images/delete.png"/></div></div>
+	</div>
+	<div class="content" data-role="content" >
+		<div id="customer-info">
+			<div id="customerimages">
+				<ul>
+					<li><button data-role="none" class="picbutton shotbtn" id ="takePicBtn" onclick="getPhoto()">Take Picture</button></li>
+					<li class="img"><img src="" class="picbutton " id="image"/></li>
+				</ul>
+			</div>
+			<form id="customeredit">
+				<input id="detailname" data-role="none" class="requiered" type="text" name="detailname"/>
+				<label>Phone number: <input  id="detailphone" data-role="none" type="tel" name="detailphone"/><a href="" class="call_btn"><img src="images/call_icon.png"/></a></label>
+				<label>Email: <input id="detailemail" data-role="none" type="email" name="detailemail"/></label>
+				<label>Birthday: <input id="detailbirthday" data-role="none" class="requiered" type="date" name="detailbithday"/></label>
+				<label>Sex: <select id="detailsex" data-role="none" class="requiered" name="detailsex">
+								<option value="Female">Female</option>
+								<option value="Male">Male</option>
+							</select>
+				</label>
+				<label>Alergies: <input id="detailalergies" data-role="none" type="text" name="detailalergies"/></label>
+				<label>Last visit: <input id="detaillastvisit" data-role="none" class="requiered" type="date" name="detaillastvisit"/></label>
+				<label>Treatments: <input id="detailtreatments" data-role="none" type="text" name="detailtreatments"/></label>
+				<label>Cut: <input id="detailcut" data-role="none" type="text" name="detailcut"/></label>
+				<label>Color: <input id="detailcolor" data-role="none" type="text" name="detailcolor"/></label>
+				<label>Hair type: <input id="detailhairtype" data-role="none" type="text" name="detailhairtype"/></label>
+				<label>Scalp type: <input id="detailscalptype" data-role="none" type="text" name="detailscalptype"/></label>
+				<label>Products: <input id="detailproducts" data-role="none" type="text" name="detailproducts"/></label>
+				<input data-role="none" type="submit" id="submiteditcustomer" data-ajax="false" class="button" value="Update"/>
+		</form>
+		<input id="picurl" type="hidden" value=""/>
+		<input id="piccustomerid" type="hidden" value=""/>
+		</div>
+	</div>
+</div>
+<!--Appointments page-->
+<div data-role="page" id="appointments">
+	<div id="topbar">
+		<a class="back" href="#home" data-direction="reverse"><img src="images/back.png"/>Appoinments</a>
+	</div>
+	<div class="content" data-role="content">
+		<form id="appointementForm">
+			<label>Customer: 
+				<select data-role="none" id="apnmtcustlist">
+					<option value="new">New</option>
+				</select>
+			</label>
+			<label>Date: <input type="date" data-role="none" name="apnmtdate" id="apnmtdate" placeholder="Date"/></label>
+			<label>Time in: <input type="time" data-role="none" name="apnmttimein" id="apnmttimein" placeholder="Time in"/></label>
+			<label>Time out: <input type="time" data-role="none" name="apnmttimeout" id="apnmttimeout" placeholder="Time out"/></label>
+			<label>Notes: <input type="text" data-role="none" name="apnmtnotes" id="apnmtnotes" placeholder="Notes"/></label>
+			<button class="button" onclick="calendar_events()" data-role="none">Add appoinment</button>
+		</form>
+		<script type="text/javascript">
+			function calendar_events(){
+				var date = $("#apnmtdate").val();
+				var timein = $("#apnmttimein").val();
+				var timeout = $("#apnmttimeout").val();
+				var cust = $("#apnmtcustlist").val();
+				date = date.split("-");
+				timein = timein.split(":");
+				var timein1= timein[1].split("");
+				timeout = timeout.split(":");
+				var timeout1= timeout[1].split("");
+				var year = parseInt(date[0]);
+				var month = parseInt(date[1]-1);
+				var day = parseInt(date[2]);
+				var hIn = parseInt(timein[0]);
+				var mIn = parseInt(timein[1]);
+				var hOut = parseInt(timeout[0]);
+				var mOut = parseInt(timeout[1]);
+				var startDate = new Date(year,month,day,hIn,mIn,0,0,0); // beware: month 0 = january, 11 = december
+				var endDate = new Date(year,month,day,hOut,mOut,0,0,0);
+				var title = "Appoinment for "+cust;
+				var notes = $("#apnmtnotes").val();
+				var location = "My Salon";
+				var success = function(message) { alert("Success: " + JSON.stringify(message)); };
+				var error = function(message) { alert("Error: " + message); };
+				// window.plugins.calendar.listEventsInRange(startDate,endDate,success,error);
+				//window.plugins.calendar.createCalendar(calendarName,success,error);
+				window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
+			}
+		</script>
+		<button class="button" onclick="window.plugins.calendar.openCalendar()" data-role="none">Open appoinments</button>
+
+    </div>
+</div>
+<!-- /Customer profile page-->
+<script type="text/javascript">
+//save user info
+$('#submiteditcustomer').hide();
+$('#customeredit input,#customeredit select').prop("disabled",true);
+$('#submitnewcustomer').click(function(e) {
+		$('#submitnewcustomer .requiered').each(function() {
+			if ($(this).val().length == 0) {
+				$(this).css('background-color','#ffcccc');
+				$(this).focus();
+				e.preventDefault();
+			}		
+		});
+	});
+$('#user-info').submit(function(e){
+	e.preventDefault();
+		var n = $('#name').val();
+		var p = $('#phone').val();
+		var e = $('#email').val();
+		var bd = $('#birthday').val();
+		var s = $('#sex').val();
+		var al=  $('#alergies').val();
+		var lv=  $('#lastvisit').val();
+		var tr=  $('#treatments').val();
+		var ct=  $('#cut').val();
+		var cl=  $('#color').val();
+		var ht=  $('#hairtype').val();
+		var st=  $('#scalptype').val();
+		var pr=  $('#products').val();
+		cust.insertRecord(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr);
+});
+$('#customeredit').submit(function(e){
+	e.preventDefault();
+		var n = $('#detailname').val();
+		var p = $('#detailphone').val();
+		var e = $('#detailemail').val();
+		var bd = $('#detailbirthday').val();
+		var s = $('#detailsex').val();
+		var al=  $('#detailalergies').val();
+		var lv=  $('#detaillastvisit').val();
+		var tr=  $('#detailtreatments').val();
+		var ct=  $('#detailcut').val();
+		var cl=  $('#detailcolor').val();
+		var ht=  $('#detailhairtype').val();
+		var st=  $('#detailscalptype').val();
+		var pr=  $('#detailproducts').val();
+		var id = $('#piccustomerid').val();
+		cust.updateRecord(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr,id);
+});
+$('#edit').on('click',function(){
+	$('#submiteditcustomer').show();
+	$('#customeredit input,#customeredit select').prop("disabled",false);
+});
+$('#custdetl').on('click',function(){
+	$('#customerdetails #customer-info #customerimages ul li.piclist').remove();
+})
+document.addEventListener("backbutton", function(e){
+	if($.mobile.activePage.is('#home')){
+        //window.location = "#exitDialog";
+         exitAppPopup();
+    }else{
+		navigator.app.backHistory();
+    };
+});
+function exitAppPopup() {
+	navigator.notification.confirm(
+	"Are you sure?", 
+	function(buttonIndex){
+		ConfirmExit(buttonIndex);
+	}, 
+	"Close application", 
+	"Yes,No"
+	); 
+//return false;
+};
+function ConfirmExit(stat){
+if(stat == "1"){
+	navigator.app.exitApp();
+	}else{
+		return;
+	};
+};
+</script>
+</body>
+</html>
