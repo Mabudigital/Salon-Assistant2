@@ -114,7 +114,7 @@ function getPhoto(){
 
 	}
 	function successMove(entry){
-		$("#picurl").val("file:///storage/emulated/0"+entry.fullPath);
+		$("#picurl").val("/storage/emulated/0"+entry.fullPath);
 		var cid = $("#piccustomerid").val();
 		var purl = $("#picurl").val();
 		//var purl = imageURI
