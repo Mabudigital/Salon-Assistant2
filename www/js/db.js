@@ -263,4 +263,6 @@ function getCustomerPictureData(id) {
 		}
 	}
 	pic.selectCustRecords(id,renderPic);
+	$('#customerlist').html("");
+	getAllTheData();
 }
