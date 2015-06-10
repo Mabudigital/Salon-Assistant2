@@ -43,9 +43,13 @@ cust.onSuccess = function (tx, r){
         'Ok'                  // buttonName
     );*/
 	$('#user-info').trigger("reset");
+	$('#no-customer').remove();
+	getAllTheData();
+	window.location.replace('#customerprofile');
+}
+cust.onUpdateSuccess = function (tx, r){
 	$('#submiteditcustomer').hide();
 	$('#customeredit input,#customeredit select').prop("disabled",true);
-	getAllTheData();
 	window.location.replace('#customerprofile');
 }
 //function will be called when process succeed
@@ -57,7 +61,7 @@ cust.updateRecord = function(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr,id) {
 	cust.db.transaction(function(tx) {
 		tx.executeSql("UPDATE customers SET name=?,phone=?,email=?,birthday=?,sex=?,alergies=?,lastvisit=?,treatments=?,cut=?,color=?,hairtype=?,scalptype=?,products=? WHERE id = ?",
                  [n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr,id],
-                 cust.onSuccess,
+                 cust.onUpdateSuccess,
                  cust.onError);
 	});
 }
@@ -93,14 +97,12 @@ function getAllTheData() {
 		}else{
 			for (var i = 0; i < rs.rows.length; i++) {
 				var rows = rs.rows.item(i);
-				$('#customerlist').append("<li><a href='#customerdetails' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' class='' src='"+rows['image']+"'/><div class='custlistinfo'><div class='custlistname'> "+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
+				$('#customerlist').append("<li><a href='#customerdetails' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+rows['image']+"' alt='"+rows['image']+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
 				$("#apnmtcustlist").append("<option value='"+rows['name']+"'>"+rows['name']+"</option>");
-				//getCustomerPictureData(rows['id']);
 			}
 		}
 	}
 	cust.selectAllRecords(render);
-	
 }
 //select customer record
 cust.selectCustRecords = function(id,fd) {
@@ -118,7 +120,7 @@ function getCustomerData(id) {
 		for (var i = 0; i < rs.rows.length; i++) {
 			//console.log(rs.rows.item(i));
 			var rows = rs.rows.item(0);
-			$('#custdetl #name').html("<img class='custprofimg' src='"+rows['image']+"'/> "+rows['name']);
+			$('#custdetl #name').html("<img class='custprofimg' src='"+rows['image']+"' alt='"+rows['image']+"'/> "+rows['name']);
 			$('#customerdetails #customer-info #detailname').val(rows['name']);
 			$('#customerdetails #customer-info #detailphone').val(rows['phone']);
 			$('#customerdetails #customer-info .call_btn').attr("href","tel:"+rows['phone']);
