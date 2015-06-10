@@ -97,7 +97,7 @@ function getAllTheData() {
 		}else{
 			for (var i = 0; i < rs.rows.length; i++) {
 				var rows = rs.rows.item(i);
-				$('#customerlist').append("<li><a href='#customerdetails' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+rows['image']+"' alt='"+rows['image']+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
+				$('#customerlist').append("<li><a href='#customerdetails' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+rows['image']+"' alt='"+rows['image']+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['image']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
 				$("#apnmtcustlist").append("<option value='"+rows['name']+"'>"+rows['name']+"</option>");
 			}
 		}
@@ -120,7 +120,7 @@ function getCustomerData(id) {
 		for (var i = 0; i < rs.rows.length; i++) {
 			//console.log(rs.rows.item(i));
 			var rows = rs.rows.item(0);
-			$('#custdetl #name').html("<img class='custprofimg' src='"+rows['image']+"' alt='"+rows['image']+"'/> "+rows['name']);
+			$('#custdetl #name').html("<img class='custprofimg' src='"+rows['image']+"' alt='"+rows['image']+"'/> "+rows['image']);
 			$('#customerdetails #customer-info #detailname').val(rows['name']);
 			$('#customerdetails #customer-info #detailphone').val(rows['phone']);
 			$('#customerdetails #customer-info .call_btn').attr("href","tel:"+rows['phone']);
