@@ -44,7 +44,7 @@ cust.onSuccess = function (tx, r){
     );*/
 	$('#user-info').trigger("reset");
 	$('#no-customer').remove();
-	getAllTheData();
+	//getAllTheData();
 	window.location.replace('#customerprofile');
 }
 cust.onUpdateSuccess = function (tx, r){
@@ -99,7 +99,7 @@ function getAllTheData() {
 			for (var i = 0; i < rs.rows.length; i++) {
 				var rows = rs.rows.item(i);
 				image = rows['image'];
-				if(image == null && $('#sex').val()=='Male'){image = "images/noimagemale.jpg";}else if(image == null && $('#sex').val()=='Female'){image = "images/noimagefemale.jpg";}
+				if(image == null && $('#sex').val() == 'Male'){image = "images/noimagemale.jpg";}else if(image == null && $('#sex').val() == 'Female'){image = "images/noimagefemale.jpg";}
 				$('#customerlist').append("<li><a href='#customerdetails' data-role='none' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+image+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
 				$("#apnmtcustlist").append("<option value='"+rows['name']+"'>"+rows['name']+"</option>");
 			}
