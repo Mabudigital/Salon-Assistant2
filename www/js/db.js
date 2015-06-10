@@ -175,17 +175,9 @@ pic.insertRecord = function(cid,purl){
 			pic.OnError);
 	});
 	cust.updateRecord(purl,cid);
-	
 } 
 //function will be called when process succeed
  pic.onSuccess = function (tx, r){
-	/*navigator.notification.alert(
-        'Done!',  // message
-        null,         // callback
-        'Salon Assistant',            // title
-        'Ok'                  // buttonName
-    );*/
-	$('#customerlist').html("");
 	var id = $("#piccustomerid").val();
 	getCustomerData(id);
 	getAllTheData();
