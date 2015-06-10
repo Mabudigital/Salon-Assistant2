@@ -180,6 +180,7 @@ pic.insertRecord = function(cid,purl){
  pic.onSuccess = function (tx, r){
 	var id = $("#piccustomerid").val();
 	getCustomerData(id);
+	getCustomerPictureData(id);
 	window.location.replace('#customersdetails');
 }
 //function will be called when process succeed

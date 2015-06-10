@@ -92,7 +92,7 @@ function getPhoto(){
 
 	function onSuccess(imageURI) {
 		window.resolveLocalFileSystemURI(imageURI, resolveOnSuccess, resolveOnError);
-		document.getElementById('image').src = imageURI;
+		//document.getElementById('image').src = imageURI;
 	}
 
 	function onFail(message) {
