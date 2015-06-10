@@ -258,8 +258,6 @@ $('#customer-edit').submit(function(e){
 		var dpr =  $('#detailproducts').val();
 		var did = $('#piccustomerid').val();
 		cust.updateCustomer(dn,dp,de,dbd,ds,dal,dlv,dtr,dct,dcl,dht,dst,dpr,did);
-		$('#submiteditcustomer').hide();
-		$('#customeredit input,#customeredit select').prop("disabled",true);
 });
 $('#edit').on('click',function(){
 	$('#submiteditcustomer').show();
