@@ -256,6 +256,8 @@ $('#customeredit').submit(function(e){
 		var st=  $('#detailscalptype').val();
 		var pr=  $('#detailproducts').val();
 		var id = $('#piccustomerid').val();
+		$('#submiteditcustomer').hide();
+		$('#customeredit input,#customeredit select').prop("disabled",true);
 		cust.updateRecord(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr,id);
 });
 $('#edit').on('click',function(){
