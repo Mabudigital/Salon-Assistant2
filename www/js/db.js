@@ -34,21 +34,26 @@ cust.insertRecord = function(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr){
 			cust.OnError);
 	});
 } 
+//update table
+cust.updateCustomer = function(dn,dp,de,dbd,ds,dal,dlv,dtr,dct,dcl,dht,dst,dpr,did){
+	cust.db.transaction(function(tx){
+		tx.executeSql('UPDATE customers SET name = ? ,phone = ? ,email = ? ,birthday = ? ,sex = ? ,alergies = ? ,lastvisit = ? ,treatments = ? ,cut = ? ,color = ? ,hairtype = ? ,scalptype = ? ,products = ? WHERE id = ?',
+                 [dn,dp,de,dbd,ds,dal,dlv,dtr,dct,dcl,dht,dst,dpr,did],
+                 cust.onUpdateSuccess,
+                 cust.onError);
+	});
+}
 //function will be called when process succeed
 cust.onSuccess = function (tx, r){
-	/*navigator.notification.alert(
-        'Done!',  // message
-        null,         // callback
-        'Salon Assistant',            // title
-        'Ok'                  // buttonName
-    );*/
 	$('#user-info').trigger("reset");
 	$('#no-customer').remove();
 	$('#customerlist').html("");
 	getAllTheData();
 	window.location.replace('#customerprofile');
 }
+//function will be called when process succeed
 cust.onUpdateSuccess = function (tx, r){
+	$('#customerlist').html("");
 	getAllTheData();
 	window.location.replace('#customerprofile');
 	$('#submiteditcustomer').hide();
@@ -57,15 +62,6 @@ cust.onUpdateSuccess = function (tx, r){
 //function will be called when process succeed
 cust.onError = function (tx, e){
 	console.log("SQLite error: "+e.message);
-}
-//update table
-cust.updateRecord = function(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr,id) {
-	cust.db.transaction(function(tx) {
-		tx.executeSql("UPDATE customers SET name=?,phone=?,email=?,birthday=?,sex=?,alergies=?,lastvisit=?,treatments=?,cut=?,color=?,hairtype=?,scalptype=?,products=? WHERE id = ?",
-                 [n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr,id],
-                 cust.onSuccess,
-                 cust.onError);
-	});
 }
 //delete record
 cust.deleteRecord = function(id) {
@@ -101,7 +97,8 @@ function getAllTheData() {
 			for (var i = 0; i < rs.rows.length; i++) {
 				var rows = rs.rows.item(i);
 				image = rows['image'];
-				if(image == null || image == ""){image = "images/noimagefemale.jpg";}				$('#customerlist').append("<li id='cust'"+rows['id']+"><a href='#customerdetails' data-role='none' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+image+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
+				if(image == null || image == ""){image = "images/noimagefemale.jpg";}
+				$('#customerlist').append("<li id='cust"+rows['id']+"'><a href='#customerdetails' data-role='none' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+image+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
 				$("#apnmtcustlist").append("<option value='"+rows['name']+"'>"+rows['name']+"</option>");
 			}
 		}

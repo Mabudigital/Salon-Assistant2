@@ -61,7 +61,7 @@ input[type='text'],input[type='tel'],input[type='email'],input[type='date'],inpu
 .call_btn img{width:24px;position:relative;top:-35px;left:92%;}
 #customeredit [disabled]{color:#555;-webkit-text-fill-color:rgba(85,85,85,1)}
 #customerimages ul li.img{display:none;}
-@media (min-device-width: 480px){
+@media (min-width: 640px){
 	#customerlist .custlistinfo{top:0;left:10px;width:88.5%;}
 }
 </style>
@@ -132,7 +132,7 @@ input[type='text'],input[type='tel'],input[type='email'],input[type='date'],inpu
 					<li class="img"><img src="" class="picbutton " id="image"/></li>
 				</ul>
 			</div>
-			<form id="customeredit">
+			<form id="customer-edit">
 				<input id="detailname" data-role="none" class="requiered" type="text" name="detailname"/>
 				<label>Phone number: <input  id="detailphone" data-role="none" type="tel" name="detailphone"/><a href="" class="call_btn"><img src="images/call_icon.png"/></a></label>
 				<label>Email: <input id="detailemail" data-role="none" type="email" name="detailemail"/></label>
@@ -150,10 +150,11 @@ input[type='text'],input[type='tel'],input[type='email'],input[type='date'],inpu
 				<label>Hair type: <input id="detailhairtype" data-role="none" type="text" name="detailhairtype"/></label>
 				<label>Scalp type: <input id="detailscalptype" data-role="none" type="text" name="detailscalptype"/></label>
 				<label>Products: <input id="detailproducts" data-role="none" type="text" name="detailproducts"/></label>
-				<input data-role="none" type="submit" id="submiteditcustomer" data-ajax="false" class="button" value="Update"/>
-		</form>
-		<input id="picurl" type="hidden" value=""/>
-		<input id="piccustomerid" type="hidden" value=""/>
+				<input data-role="none" type="submit" id="submiteditcustomer" class="button" value="Update"/>
+				<input id="picurl" type="hidden" value=""/>
+				<input id="piccustomerid" type="hidden" value=""/>
+			</form>
+		
 		</div>
 	</div>
 </div>
@@ -213,8 +214,8 @@ input[type='text'],input[type='tel'],input[type='email'],input[type='date'],inpu
 <script type="text/javascript">
 //save user info
 $('#submiteditcustomer').hide();
-$('#customeredit input,#customeredit select').prop("disabled",true);
-$('#submitnewcustomer').click(function(e) {
+$('#customer-edit input,#customer-edit select').prop("disabled",true);
+/*$('#submitnewcustomer').click(function(e) {
 		$('#submitnewcustomer .requiered').each(function() {
 			if ($(this).val().length == 0) {
 				$(this).css('background-color','#ffcccc');
@@ -222,7 +223,7 @@ $('#submitnewcustomer').click(function(e) {
 				e.preventDefault();
 			}		
 		});
-	});
+	});*/
 $('#user-info').submit(function(e){
 	e.preventDefault();
 		var n = $('#name').val();
@@ -240,29 +241,29 @@ $('#user-info').submit(function(e){
 		var pr=  $('#products').val();
 		cust.insertRecord(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr);
 });
-$('#customeredit').submit(function(e){
+$('#customer-edit').submit(function(e){
 	e.preventDefault();
-		var n = $('#detailname').val();
-		var p = $('#detailphone').val();
-		var e = $('#detailemail').val();
-		var bd = $('#detailbirthday').val();
-		var s = $('#detailsex').val();
-		var al=  $('#detailalergies').val();
-		var lv=  $('#detaillastvisit').val();
-		var tr=  $('#detailtreatments').val();
-		var ct=  $('#detailcut').val();
-		var cl=  $('#detailcolor').val();
-		var ht=  $('#detailhairtype').val();
-		var st=  $('#detailscalptype').val();
-		var pr=  $('#detailproducts').val();
-		var id = $('#piccustomerid').val();
+		var dn = $('#detailname').val();
+		var dp = $('#detailphone').val();
+		var de = $('#detailemail').val();
+		var dbd = $('#detailbirthday').val();
+		var ds = $('#detailsex').val();
+		var dal =  $('#detailalergies').val();
+		var dlv =  $('#detaillastvisit').val();
+		var dtr =  $('#detailtreatments').val();
+		var dct =  $('#detailcut').val();
+		var dcl =  $('#detailcolor').val();
+		var dht =  $('#detailhairtype').val();
+		var dst =  $('#detailscalptype').val();
+		var dpr =  $('#detailproducts').val();
+		var did = $('#piccustomerid').val();
+		cust.updateCustomer(dn,dp,de,dbd,ds,dal,dlv,dtr,dct,dcl,dht,dst,dpr,did);
 		$('#submiteditcustomer').hide();
 		$('#customeredit input,#customeredit select').prop("disabled",true);
-		cust.updateRecord(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr,id);
 });
 $('#edit').on('click',function(){
 	$('#submiteditcustomer').show();
-	$('#customeredit input,#customeredit select').prop("disabled",false);
+	$('#customer-edit input,#customer-edit select').prop("disabled",false);
 });
 $('#custdetl').on('click',function(){
 	$('#customerdetails #customer-info #customerimages ul li.piclist').remove();
