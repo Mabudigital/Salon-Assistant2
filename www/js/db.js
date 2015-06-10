@@ -256,7 +256,7 @@ function getCustomerPictureData(id) {
 	// in this case we'll just loop through it and output the results to the console
 		for (var i = 0; i < rs.rows.length;i++) {
 			var rows = rs.rows.item(i);
-			$('#customerdetails #customer-info #customerimages ul li.piclist').remove();
+			//$('#customerdetails #customer-info #customerimages ul li.piclist').remove();
 			$('#customerdetails #customer-info #customerimages ul').append("<li class='piclist' id='pic"+rows['id']+"'><a data-role='none' class='pic' href='"+rows['url']+"'><img class='picbutton' src='"+rows['url']+"' alt='"+rows['url']+"'/></br><a id='share' data-role='none' class='share' href='#' onclick=''><img src='images/ic_action_share.png'/></a><a id='picdelete' data-role='none' class='picdelete' href='#' onclick=''><img src='images/picdelete.png'/></a></a></li>");
 			$(".share").attr("onclick","window.plugins.socialsharing.share('This is one of my latest works.',null,'"+rows['url']+"')");
 			$(".picdelete").attr("onclick","pic.deleteRecord(\""+rows['id']+"\",\""+rows['url']+"\")");
