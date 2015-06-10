@@ -179,6 +179,8 @@ pic.insertRecord = function(cid,purl){
 //function will be called when process succeed
  pic.onSuccess = function (tx, r){
 	var id = $("#piccustomerid").val();
+	$('#customerlist').html("");
+	$('li.piclist').remove();
 	getCustomerData(id);
 	getCustomerPictureData(id);
 	window.location.replace('#customersdetails');
