@@ -15,7 +15,7 @@ cust.openDb = function(){
 cust.createTable = function(){
 	cust.db.transaction(function(tx){
 		//tx.executeSql('DROP TABLE customers');
-		tx.executeSql('CREATE TABLE IF NOT EXISTS customers(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL, phone VARCHAR(255) NULL,email VARCHAR(255) NULL,birthday VARCHAR(255) NOT NULL,sex VARCHAR(255) NOT NULL, alergies VARCHAR(255) NULL, lastvisit VARCHAR(255) NULL, treatments VARCHAR(255) NULL, cut VARCHAR(255) NULL, color VARCHAR(255) NULL, hairtype VARCHAR(255) NULL, scalptype VARCHAR(255) NULL, products VARCHAR(255) NULL, image VARCHAR(255) NULL)');
+		tx.executeSql('CREATE TABLE IF NOT EXISTS customers(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(255) NOT NULL, phone VARCHAR(255) NULL,email VARCHAR(255) NULL,birthday VARCHAR(255) NOT NULL,sex VARCHAR(255) NOT NULL, alergies VARCHAR(255) NULL, lastvisit VARCHAR(255) NULL, treatments VARCHAR(255) NULL, cut VARCHAR(255) NULL, color VARCHAR(255) NULL, hairtype VARCHAR(255) NULL, scalptype VARCHAR(255) NULL, products VARCHAR(255) NULL, image VARCHAR(255) DEFAULT "images/noimagefemale")');
 	});
 }
 function init(){
