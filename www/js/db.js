@@ -209,7 +209,7 @@ cust.updateRecord = function(isrc,id) {
 //delete record
 pic.deleteRecord = function(id,purl) {
 	navigator.notification.confirm(
-		"Are you sure?", 
+		"Are you sure you want to delete this image("+purl+")?", 
 		function(deletePicButtonIndex){
 			ConfirmPicDelete(id,purl,deletePicButtonIndex);
 		}, 
