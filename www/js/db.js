@@ -225,15 +225,15 @@ function ConfirmPicDelete(id,purl,pstat){
 		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
 			fileSystem.root.getFile(relativeFilePath, {create:false}, function(fileEntry){
 				fileEntry.remove(function(file){
-					console.log("File removed!");
+					alert(file+"-File removed!");
 				},function(){
-					console.log("error deleting the file " + error.code);
+					alert("error deleting the file " + error.code);
 					});
 				},function(){
-					console.log("file does not exist");
+					alert("file does not exist");
 				});
 			},function(evt){
-				console.log(evt.target.error.code);
+				alert(evt.target.error.code);
 		});
 	
 	}else{
