@@ -48,6 +48,7 @@ cust.onSuccess = function (tx, r){
 	window.location.replace('#customerprofile');
 }
 cust.onUpdateSuccess = function (tx, r){
+	getAllTheData();
 	window.location.replace('#customerprofile');
 	$('#submiteditcustomer').hide();
 	$('#customeredit input,#customeredit select').prop("disabled",true);
@@ -98,7 +99,7 @@ function getAllTheData() {
 			for (var i = 0; i < rs.rows.length; i++) {
 				var rows = rs.rows.item(i);
 				image = rows['image'];
-				if(image == null){if($('#sex').val()=='Male'){image = "images/noimagemale.jpg";}else{image = "images/noimagefemale.jpg";}}
+				if(image == null && $('#sex').val()=='Male'){image = "images/noimagemale.jpg";}else if(image == null && $('#sex').val()=='Female'){image = "images/noimagefemale.jpg";}
 				$('#customerlist').append("<li><a href='#customerdetails' data-role='none' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+image+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
 				$("#apnmtcustlist").append("<option value='"+rows['name']+"'>"+rows['name']+"</option>");
 			}
@@ -123,8 +124,7 @@ function getCustomerData(id) {
 			//console.log(rs.rows.item(i));
 			var rows = rs.rows.item(0);
 			image = rows['image'];
-			if(image == null){
-				if($('#sex').val()=='Male'){image = "images/noimagemale.jpg";}else{image = "images/noimagefemale.jpg";}}
+			if(image == null){if($('#sex').val()=='Male'){image = "images/noimagemale.jpg";}else{image = "images/noimagefemale.jpg";}}
 			$('#custdetl #name').html("<img class='custprofimg' src='"+image+"'/> "+rows['name']);
 			$('#customerdetails #customer-info #detailname').val(rows['name']);
 			$('#customerdetails #customer-info #detailphone').val(rows['phone']);
@@ -205,24 +205,35 @@ cust.updateRecord = function(isrc,id) {
 	});
 }
 //delete record
-pic.deleteRecord = function(id,t) {
+pic.deleteRecord = function(id,purl) {
 	navigator.notification.confirm(
 		"Are you sure?", 
 		function(deletePicButtonIndex){
-			ConfirmPicDelete(id,deletePicButtonIndex);
+			ConfirmPicDelete(id,purl,deletePicButtonIndex);
 		}, 
 		"Delete Picture", 
 		"Yes,No"
 	); 
-	//pic.db.transaction(function(tx) {tx.executeSql("DELETE FROM pictures WHERE id = ?",[id],pic.onSuccess,pic.onError);});
-	//$("#pic"+id).hide("slow").remove();
-	//alert("Deleted");
-	
 };
-function ConfirmPicDelete(id,pstat){
+function ConfirmPicDelete(id,purl,pstat){
 	if(pstat == "1"){
 		$("#pic"+id).hide("slow").remove();
 		pic.db.transaction(function(tx) {tx.executeSql("DELETE FROM pictures WHERE id = ?",[id],pic.onSuccess,pic.onError);});
+		var relativeFilePath = purl;
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+			fileSystem.root.getFile(relativeFilePath, {create:false}, function(fileEntry){
+				fileEntry.remove(function(file){
+					console.log("File removed!");
+				},function(){
+					console.log("error deleting the file " + error.code);
+					});
+				},function(){
+					console.log("file does not exist");
+				});
+			},function(evt){
+				console.log(evt.target.error.code);
+		});
+	
 	}else{
 		return false;
 	};
@@ -256,7 +267,7 @@ function getCustomerPictureData(id) {
 			var rows = rs.rows.item(i);
 			$('#customerdetails #customer-info #customerimages ul').append("<li class='piclist' id='pic"+rows['id']+"'><a data-role='none' class='pic' href='"+rows['url']+"'><img class='picbutton' src='"+rows['url']+"' alt='"+rows['url']+"'/></br><a id='share' data-role='none' class='share' href='#' onclick=''><img src='images/ic_action_share.png'/></a><a id='picdelete' data-role='none' class='picdelete' href='#' onclick=''><img src='images/picdelete.png'/></a></a></li>");
 			$(".share").attr("onclick","window.plugins.socialsharing.share('This is one of my latest works.',null,'"+rows['url']+"')");
-			$(".picdelete").attr("onclick","pic.deleteRecord(\""+rows['id']+"\")");
+			$(".picdelete").attr("onclick","pic.deleteRecord(\""+rows['id']+"\",\""+rows['url']+"\")");
 		}
 	}
 	pic.selectCustRecords(id,renderPic);
