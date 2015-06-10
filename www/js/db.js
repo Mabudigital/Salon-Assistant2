@@ -31,18 +31,18 @@ cust.insertRecord = function(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr){
 		tx.executeSql('INSERT INTO customers(name,phone,email,birthday,sex,alergies,lastvisit,treatments,cut,color,hairtype,scalptype,products) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
 			[n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr],
 			cust.onSuccess,
-			getAllTheData,
 			cust.OnError);
 	});
 } 
 //function will be called when process succeed
 cust.onSuccess = function (tx, r){
-	navigator.notification.alert(
+	/*navigator.notification.alert(
         'Done!',  // message
         null,         // callback
         'Salon Assistant',            // title
         'Ok'                  // buttonName
-    );
+    );*/
+	getAllTheData();
 	window.location.replace('#customerprofile');
 }
 //function will be called when process succeed
@@ -171,12 +171,14 @@ pic.insertRecord = function(cid,purl){
 } 
 //function will be called when process succeed
  pic.onSuccess = function (tx, r){
-	navigator.notification.alert(
+	/*navigator.notification.alert(
         'Done!',  // message
         null,         // callback
         'Salon Assistant',            // title
         'Ok'                  // buttonName
-    );
+    );*/
+	var id = $("#piccustomerid").val();
+	getCustomerData(id);
 	window.location.replace('#customersdetails');
 }
 //function will be called when process succeed
@@ -244,11 +246,12 @@ function getCustomerPictureData(id) {
 		for (var i = 0; i < rs.rows.length;i++) {
 			var rows = rs.rows.item(i);
 			image = $(".custprofimg").attr("src");
-			if(image ==""){
+			if(image == ""){
 				if($('#detailsex').val()=='Male'){image = "images/noimagemale.jpg";
 				} else {image ="images/noimagefemale.jpg";}
+				$(".custprofimg").attr("src",image);
 			}
-			//$("#pic"+rows['id']+".custprofimg").attr("src",image);
+			
 			$('#customerdetails #customer-info #customerimages ul').append("<li class='piclist' id='pic"+rows['id']+"'><a data-role='none' class='pic' href='"+rows['url']+"'><img class='picbutton' src='"+rows['url']+"' alt='"+rows['url']+"'/></br><a id='share' data-role='none' class='share' href='#' onclick=''><img src='images/ic_action_share.png'/></a><a id='picdelete' data-role='none' class='picdelete' href='#' onclick=''><img src='images/picdelete.png'/></a></a></li>");
 			$(".share").attr("onclick","window.plugins.socialsharing.share('This is one of my latest works.',null,'"+rows['url']+"')");
 			$(".picdelete").attr("onclick","pic.deleteRecord(\""+rows['id']+"\")");
