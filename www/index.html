@@ -236,7 +236,6 @@ $('#user-info').submit(function(e){
 		var st=  $('#scalptype').val();
 		var pr=  $('#products').val();
 		cust.insertRecord(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr);
-		$('#user-info').trigger("reset");
 });
 $('#customeredit').submit(function(e){
 	e.preventDefault();
@@ -255,8 +254,6 @@ $('#customeredit').submit(function(e){
 		var pr=  $('#detailproducts').val();
 		var id = $('#piccustomerid').val();
 		cust.updateRecord(n,p,e,bd,s,al,lv,tr,ct,cl,ht,st,pr,id);
-		$('#submiteditcustomer').hide();
-		$('#customeredit input,#customeredit select').prop("disabled",true);
 });
 $('#edit').on('click',function(){
 	$('#submiteditcustomer').show();
