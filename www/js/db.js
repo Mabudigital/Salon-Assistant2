@@ -44,7 +44,8 @@ cust.onSuccess = function (tx, r){
     );*/
 	$('#user-info').trigger("reset");
 	$('#no-customer').remove();
-	//getAllTheData();
+	$('#customerlist').html("");
+	getAllTheData();
 	window.location.replace('#customerprofile');
 }
 cust.onUpdateSuccess = function (tx, r){
@@ -81,6 +82,7 @@ cust.deleteRecord = function(id) {
 function ConfirmDelete(id,dstat){
 	if(dstat == "1"){
 		cust.db.transaction(function(tx){tx.executeSql("DELETE FROM customers WHERE id = ?",[id],cust.onSuccess,cust.onError);});
+		$("#cust"+id).hide("slow").remove();
 		pic.deleteRecord(id);
 	}else{
 		return false;
@@ -99,8 +101,8 @@ function getAllTheData() {
 			for (var i = 0; i < rs.rows.length; i++) {
 				var rows = rs.rows.item(i);
 				image = rows['image'];
-				if(image == null && $('#sex').val() == 'Male'){image = "images/noimagemale.jpg";}else if(image == null && $('#sex').val() == 'Female'){image = "images/noimagefemale.jpg";}
-				$('#customerlist').append("<li><a href='#customerdetails' data-role='none' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+image+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
+				if(image == null && rows['sex'] == 'Male'){image = "images/noimagemale.jpg";}else if(image == null && rows['sex'] == 'Female'){image = "images/noimagefemale.jpg";}
+				$('#customerlist').append("<li id='cust'"+rows['id']+"><a href='#customerdetails' data-role='none' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+image+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
 				$("#apnmtcustlist").append("<option value='"+rows['name']+"'>"+rows['name']+"</option>");
 			}
 		}
@@ -124,7 +126,7 @@ function getCustomerData(id) {
 			//console.log(rs.rows.item(i));
 			var rows = rs.rows.item(0);
 			image = rows['image'];
-			if(image == null){if($('#sex').val()=='Male'){image = "images/noimagemale.jpg";}else{image = "images/noimagefemale.jpg";}}
+			if(image == null && rows['sex'] == 'Male'){image = "images/noimagemale.jpg";}else if(image == null && rows['sex'] == 'Female'){image = "images/noimagefemale.jpg";}
 			$('#custdetl #name').html("<img class='custprofimg' src='"+image+"'/> "+rows['name']);
 			$('#customerdetails #customer-info #detailname').val(rows['name']);
 			$('#customerdetails #customer-info #detailphone').val(rows['phone']);
