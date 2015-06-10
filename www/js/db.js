@@ -48,9 +48,9 @@ cust.onSuccess = function (tx, r){
 	window.location.replace('#customerprofile');
 }
 cust.onUpdateSuccess = function (tx, r){
+	window.location.replace('#customerprofile');
 	$('#submiteditcustomer').hide();
 	$('#customeredit input,#customeredit select').prop("disabled",true);
-	window.location.replace('#customerprofile');
 }
 //function will be called when process succeed
 cust.onError = function (tx, e){
@@ -97,7 +97,9 @@ function getAllTheData() {
 		}else{
 			for (var i = 0; i < rs.rows.length; i++) {
 				var rows = rs.rows.item(i);
-				$('#customerlist').append("<li><a href='#customerdetails' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+rows['image']+"' alt='"+rows['image']+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['image']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
+				image = rows['image'];
+				if(image == null){if($('#sex').val()=='Male'){image = "images/noimagemale.jpg");}else{image = "images/noimagefemale.jpg");}}
+				$('#customerlist').append("<li><a href='#customerdetails' onclick='getCustomerData(\""+rows['id']+"\"),getCustomerPictureData(\""+rows['id']+"\")'><img id='pic"+rows['id']+"' src='"+image+"'/><div class='custlistinfo'><div class='custlistname'>"+rows['name']+"</div><div class='custlistlastvisit'>Last visit: "+rows['lastvisit']+"</div></div></a></li>");
 				$("#apnmtcustlist").append("<option value='"+rows['name']+"'>"+rows['name']+"</option>");
 			}
 		}
@@ -120,7 +122,9 @@ function getCustomerData(id) {
 		for (var i = 0; i < rs.rows.length; i++) {
 			//console.log(rs.rows.item(i));
 			var rows = rs.rows.item(0);
-			$('#custdetl #name').html("<img class='custprofimg' src='"+rows['image']+"' alt='"+rows['image']+"'/> "+rows['image']);
+			image = rows['image'];
+			if(image == null){if($('#sex').val()=='Male'){image = "images/noimagemale.jpg");}else{image = "images/noimagefemale.jpg");}}
+			$('#custdetl #name').html("<img class='custprofimg' src='"+image+"'/> "+rows['name']);
 			$('#customerdetails #customer-info #detailname').val(rows['name']);
 			$('#customerdetails #customer-info #detailphone').val(rows['phone']);
 			$('#customerdetails #customer-info .call_btn').attr("href","tel:"+rows['phone']);
@@ -218,7 +222,6 @@ function ConfirmPicDelete(id,pstat){
 	if(pstat == "1"){
 		$("#pic"+id).hide("slow").remove();
 		pic.db.transaction(function(tx) {tx.executeSql("DELETE FROM pictures WHERE id = ?",[id],pic.onSuccess,pic.onError);});
-		
 	}else{
 		return false;
 	};
@@ -227,19 +230,19 @@ function ConfirmPicDelete(id,pstat){
 pic.selectAllRecords = function(fn) {
 	pic.db.transaction(function(tx) {tx.executeSql("SELECT * FROM pictures", [],fn,pic.onError);});
 }
-function getAllPicturesData() {
+/*function getAllPicturesData() {
 	var render = function (tx, rs) {
 		//rs contains our SQLite recordset, at this point you can do anything with it
 		//in this case we'll just loop through it and output the results to the console
 		for (var i = 0; i < rs.rows.length; i++) {
 			var picrows = rs.rows.item(i);
-				//if(picrows['url']!=""){$(".custprofimg").attr("src",picrows['url']);}else if($('#detailsex').val()=='Male'){$(".custprofimg").attr("src","images/noimagemale.jpg");}else{$(".custprofimg").attr("src","images/noimagefemale.jpg");}
-				//$('#customerimages ul').append("<li><a data-role='none' class='pic' href='"+picrows['url']+"'><img class='picbutton' src='"+picrows['url']+"' alt='pic'/></br><a id='share'data-role='none' class='share' href='#' onclick=''><img src='images/ic_action_share.png'/></a></a></li>");
-				//$(".share").attr("onclick","window.plugins.socialsharing.share('This is one of my latest work.',null,'"+picrows['url']+"')");
+				if(picrows['url']!=""){$(".custprofimg").attr("src",picrows['url']);}else if($('#detailsex').val()=='Male'){$(".custprofimg").attr("src","images/noimagemale.jpg");}else{$(".custprofimg").attr("src","images/noimagefemale.jpg");}
+				$('#customerimages ul').append("<li><a data-role='none' class='pic' href='"+picrows['url']+"'><img class='picbutton' src='"+picrows['url']+"' alt='pic'/></br><a id='share'data-role='none' class='share' href='#' onclick=''><img src='images/ic_action_share.png'/></a></a></li>");
+				$(".share").attr("onclick","window.plugins.socialsharing.share('This is one of my latest work.',null,'"+picrows['url']+"')");
 		}
 	}
 	pic.selectAllRecords(render);
-}
+}*/
 //select customer pictures
 pic.selectCustRecords = function(id,fd) {
 	pic.db.transaction(function(td) {td.executeSql("SELECT * FROM pictures WHERE customerId = ?", [id],fd,pic.onError);});
@@ -250,13 +253,6 @@ function getCustomerPictureData(id) {
 	// in this case we'll just loop through it and output the results to the console
 		for (var i = 0; i < rs.rows.length;i++) {
 			var rows = rs.rows.item(i);
-			/*image = $(".custprofimg").attr("src");
-			if(image == ""){
-				if($('#detailsex').val()=='Male'){image = "images/noimagemale.jpg";
-				} else {image ="images/noimagefemale.jpg";}
-				$(".custprofimg").attr("src",image);
-			}
-			*/
 			$('#customerdetails #customer-info #customerimages ul').append("<li class='piclist' id='pic"+rows['id']+"'><a data-role='none' class='pic' href='"+rows['url']+"'><img class='picbutton' src='"+rows['url']+"' alt='"+rows['url']+"'/></br><a id='share' data-role='none' class='share' href='#' onclick=''><img src='images/ic_action_share.png'/></a><a id='picdelete' data-role='none' class='picdelete' href='#' onclick=''><img src='images/picdelete.png'/></a></a></li>");
 			$(".share").attr("onclick","window.plugins.socialsharing.share('This is one of my latest works.',null,'"+rows['url']+"')");
 			$(".picdelete").attr("onclick","pic.deleteRecord(\""+rows['id']+"\")");
