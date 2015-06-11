@@ -264,5 +264,4 @@ function getCustomerPictureData(id) {
 		}
 	}
 	pic.selectCustRecords(id,renderPic);
-	window.location.replace('#customersdetails');
 }
