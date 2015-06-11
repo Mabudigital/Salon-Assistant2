@@ -179,7 +179,6 @@ pic.insertRecord = function(cid,purl){
 //function will be called when process succeed
  pic.onSuccess = function (tx, r){
 	var id = $("#piccustomerid").val();
-	getCustomerPictureData(id);
 	window.location.replace('#customersdetails');
 }
 //function will be called when process succeed
@@ -263,4 +262,5 @@ function getCustomerPictureData(id) {
 		}
 	}
 	pic.selectCustRecords(id,renderPic);
+	window.location.replace('#customersdetails');
 }

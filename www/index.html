@@ -62,7 +62,7 @@ input[type='text'],input[type='tel'],input[type='email'],input[type='date'],inpu
 #customeredit [disabled]{color:#555;-webkit-text-fill-color:rgba(85,85,85,1)}
 #customerimages ul li.img{display:none;}
 
-@media (min-width: 640px){
+@media (min-device-width: 640px){
 	#customerlist .custlistinfo{top:0;left:10px;width:88.5%;}
 }
 </style>
@@ -207,8 +207,12 @@ input[type='text'],input[type='tel'],input[type='email'],input[type='date'],inpu
 				window.plugins.calendar.createEvent(title,location,notes,startDate,endDate,success,error);
 			}
 		</script>
-		<button class="button" onclick="window.plugins.calendar.openCalendar()" data-role="none">Open appoinments</button>
-
+		<button class="button" onclick="calendar_open()" data-role="none">Open appoinments</button>
+		<script type="text/javascript">
+		function calendar_open(){
+			window.plugins.calendar.openCalendar();
+		}
+		</script>
     </div>
 </div>
 <!-- /Customer profile page-->
