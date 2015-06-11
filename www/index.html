@@ -52,10 +52,10 @@ input[type='text'],input[type='tel'],input[type='email'],input[type='date'],inpu
 #customerlist li{height:55px;width:107%;overflow:hidden;}
 #customerlist .custlistinfo{position:relative;vertical-align:top;color:#333;font-weight:bold;border-bottom:solid 1px #dadada;display:inline-block;width:87%;height:50px;left:60px;top:-50px;}
 #customerlist .custlistlastvisit{font-weight:normal;}
-#customerimages ul{width:90%;display:inline-block;white-space:nowrap;overflow:auto;}
+#customerimages ul{width:75%;display:inline-block;white-space:nowrap;overflow:auto;position:relative;vertical-align:top;padding:0;margin:0;}
 #customerimages ul li{width:125px;height:125px;overflow:hidden;border-style: solid; border-width: 1px;  border-radius: 5px; border-color:#662d91;display:inline-block;margin:10px 10px 25px;position:relative;vertical-align: top;}
 .picbutton{width:125px;line-height: 30px; font-size: 15px; color:#662d91; cursor:pointer;display:block; background: #fff;}
-.shotbtn{idth:125px;height:125px;border:none;}
+.shotbtn{width:125px;height:125px;border-style: solid; border-width: 1px;  border-radius: 5px; border-color:#662d91;margin:10px 10px 25px;position:relative;vertical-align: top;}
 #share img{width:24px;position:absolute;z-index:1;top:100px;left:95px;}
 #picdelete img{width:24px;position:absolute;z-index:1;top:100px;left:5px;}
 .call_btn img{width:24px;position:relative;top:-35px;left:92%;}
@@ -128,9 +128,10 @@ input[type='text'],input[type='tel'],input[type='email'],input[type='date'],inpu
 	<div class="content" data-role="content" >
 		<div id="customer-info">
 			<div id="customerimages">
+				<div style="display:inline-block;position:relative;vertical-align:top;"><button data-role="none" class="picbutton shotbtn" id ="takePicBtn" onclick="getPhoto()">Take Picture</button></div>
+				<!--<div class="img"><img src="" class="picbutton " id="image"/></div>-->
 				<ul>
-					<li><button data-role="none" class="picbutton shotbtn" id ="takePicBtn" onclick="getPhoto()">Take Picture</button></li>
-					<!--<li class="img"><img src="" class="picbutton " id="image"/></li>-->
+					
 				</ul>
 			</div>
 			<form id="customer-edit">
